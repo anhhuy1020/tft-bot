@@ -88,9 +88,9 @@ def loading():
 
 
 def start():
-    while onscreen("./captures/1-1.png"):
-        auto.moveTo(888, 376)
-        click_right()
+    # while onscreen("./captures/1-1.png"):
+        # auto.moveTo(888, 376)
+        # click_right()
 
     print("In the match now!")
     main()
@@ -124,8 +124,8 @@ def checks(): #added checks to see if game was interrupted
     if onscreen("./captures/play again.png"):
         won_match()
     if onscreen("./captures/dead.PNG"):   #added another check for if you actually lose in cases where you surrender at a later time. 
-            click_to("./captures/dead.PNG")
-            won_match()
+        click_to("./captures/dead.PNG")
+        won_match()
     if onscreen("./captures/reconnect.png"):
         print("reconnecting!")
         time.sleep(0.5)
@@ -144,21 +144,21 @@ def check(): #added checks to see if game was interrupted
 def main():
     while not onscreen("./captures/2-4.png"):
         buy(3)
-        buy_item()
+        # buy_item()
         time.sleep(1)
         checks() 
     while onscreen("./captures/2-4.png"):
-        auto.moveTo(928, 396)
-        click_right()
+        # auto.moveTo(928, 396)
+        # click_right()
         time.sleep(0.25)
 
     time.sleep(5)
 
     while True: # change this if you want to surrender at a different stage, also the image recognition struggles with 5 being it sees it as 3 so i had to do 6 as that's seen as a 5
         buy(3)
-        buy_item()
-        level_up()
-        re_roll()
+        # buy_item()
+        # level_up()
+        # re_roll()
         if(check()):
             print("check OK!!!")
             break
@@ -234,7 +234,7 @@ printy(r"""
 printy(f"Welcome! You're running Detergent's TFT bot.\nPlease feel free to ask questions or contribute at https://github.com/Detergent13/tft-bot", "nB")
 auto.alert("Press OK when you're in a TFT lobby!\n")
 print("Bot started, queuing up!!!!")
-queue()
-# main()
+# queue()
+main()
 
 # End auth + main script
