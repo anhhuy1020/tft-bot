@@ -234,7 +234,7 @@ printy(r"""
 printy(f"Welcome! You're running Detergent's TFT bot.\nPlease feel free to ask questions or contribute at https://github.com/Detergent13/tft-bot", "nB")
 auto.alert("Press OK when you're in a TFT lobby!\n")
 print("Bot started, queuing up!!!!")
-# queue()
-main()
+queue()
+# main()
 
 # End auth + main script
