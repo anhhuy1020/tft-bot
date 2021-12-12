@@ -54,10 +54,13 @@ def click_right(delay=.1):
 
 def click_to(path, delay=.1, check=True):
     if onscreen(path):
+        #print("click to path: " + path)
         auto.moveTo(search(path))
         click_left(delay)
+        return True
     elif check:
         print("can't find path: " + path)
+    return False
 # End utility methods
 
 
@@ -70,10 +73,19 @@ def queue():
          print("not onLoading!")
     while not onscreen("./captures/loading.png"):
         time.sleep(1)
-        click_to("./captures/accept.png")
-        time.sleep(2)
-        if onscreen("./captures/tft logo.png"):
+        if onscreen("./captures/accept.png"):
+            click_to("./captures/accept.png")
+        if onscreen("./captures/find match ready.png"):
             click_to("./captures/find match ready.png")
+        if onscreen("./captures/missions ok.png"):
+            click_to("./captures/missions ok.png")
+        if onscreen("./captures/play again.png"):
+            click_to("./captures/play again.png")
+        if onscreen("./captures/dead.PNG"):
+            click_to("./captures/dead.PNG")
+        if onscreen("./captures/reconnect.png"):
+            click_to("./captures/reconnect.png")
+
 
     print("Loading!")
     loading()
@@ -96,23 +108,40 @@ def start():
     main()
 
 
-def buy(iterations):
+def buy_hellion():
+    ret = False
+    ret = ret or click_to("./captures/chemtech.png", 0.1, False)
+    return ret
+        
+def buy_assassin(iterations):
     for i in range(iterations):
-        #updated troops
-        click_to("./captures/ziggs.png", 0.1, False)
-        click_to("./captures/lulu.png", 0.1, False)
-        click_to("./captures/kled.png", 0.1, False)
-        click_to("./captures/kennen.png", 0.1, False)
-        click_to("./captures/poppy.png", 0.1, False)
-        click_to("./captures/tristana.png", 0.1, False)
-        # click_to("./captures/vlad.png", 0.1, False)
+        click_to("./captures/Assassin/diana.png", 0.1, False)
+        click_to("./captures/Assassin/katarina.png", 0.1, False)
+        click_to("./captures/Assassin/kha.png", 0.1, False)
+        click_to("./captures/Assassin/leblanc.png", 0.1, False)
+        click_to("./captures/Assassin/noct.png", 0.1, False)
+        click_to("./captures/Assassin/pyke.png", 0.1, False)
+        click_to("./captures/Assassin/viego.png", 0.1, False)
+
+        
+        
+def buy_nightbringer(iterations):
+    for i in range(iterations):
+        click_to("./captures/Nightbringer/aph.PNG", 0.1, False)
+        click_to("./captures/Nightbringer/yasuo.png", 0.1, False)
+        click_to("./captures/Nightbringer/sej.png", 0.1, False)
+        click_to("./captures/Assassin/diana.png", 0.1, False)
+        click_to("./captures/Nightbringer/lee.png", 0.1, False)
+        click_to("./captures/Nightbringer/vlad.png", 0.1, False)
+        
+
 
 def level_up():
-    if(random.random() < 0.3) and onscreen("./captures/level_5.png") and not onscreen("./captures/gold_4.png") and not onscreen("./captures/gold_5.png") and not onscreen("./captures/gold_6.png"):
+    if(random.random() < 0.5) and onscreen("./captures/4-7.png"):
         click_to("./captures/levelup.png", 0.1, False)
 
 def re_roll():
-    if not onscreen("./captures/gold_2.png") and not onscreen("./captures/gold_3.png") and not onscreen("./captures/gold_4.png") and not onscreen("./captures/gold_5.png") and not onscreen("./captures/gold_6.png"):
+    if not onscreen("./captures/gold_0.png") and not onscreen("./captures/gold_1.png") and not onscreen("./captures/gold_2.png") and not onscreen("./captures/gold_3.png") and not onscreen("./captures/gold_4.png") and not onscreen("./captures/gold_5.png") and not onscreen("./captures/gold_6.png"):
         click_to("./captures/reroll.png", 0.1, False)    
 
 #new function, get the item from 2-2 and 3-2, working properly
@@ -143,9 +172,9 @@ def check(): #added checks to see if game was interrupted
 
 def main():
     while not onscreen("./captures/2-4.png"):
-        buy(3)
-        # buy_item()
-        time.sleep(1)
+        buy_hellion()
+        buy_item()
+        time.sleep(2)
         checks() 
     while onscreen("./captures/2-4.png"):
         # auto.moveTo(928, 396)
@@ -155,14 +184,12 @@ def main():
     time.sleep(5)
 
     while True: # change this if you want to surrender at a different stage, also the image recognition struggles with 5 being it sees it as 3 so i had to do 6 as that's seen as a 5
-        buy(3)
-        # buy_item()
-        # level_up()
-        # re_roll()
-        if(check()):
-            print("check OK!!!")
-            break
+        buy_item()
+        if not buy_hellion():
+            level_up()
+            re_roll()
         checks() 
+        time.sleep(2)
     time.sleep(1)
     checks()
     # time.sleep(1)
@@ -235,6 +262,8 @@ printy(f"Welcome! You're running Detergent's TFT bot.\nPlease feel free to ask q
 auto.alert("Press OK when you're in a TFT lobby!\n")
 print("Bot started, queuing up!!!!")
 queue()
-# main()
+#main()
+# while True:
+#     print(onscreen("captures/queue/remove_1.png"))
 
 # End auth + main script
